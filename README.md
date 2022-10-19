@@ -1,1 +1,1 @@
-# promo-X-module-2-pair-Y-sprint-Z-ada-Kitten
+# promo-r-module-2-pair-11-sprint-1-ada-Kitten
