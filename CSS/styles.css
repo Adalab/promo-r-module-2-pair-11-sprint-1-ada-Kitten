@@ -57,7 +57,7 @@
   }
   
   .about-us {
-    background-image: url("../img/fondo.jpeg");
+    background-image: url("./IMAGES/fondo.jpeg");
     width: 100%;
     height: 50vh;
     background-repeat: no-repeat;
