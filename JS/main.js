@@ -7,7 +7,7 @@ const catList = document.querySelector('.js-list');
 const kittenImage1 = 'https://ychef.files.bbci.co.uk/976x549/p07ryyyj.jpg';
 const kittenName1 = 'Anastacio';
 const kittenDesc1 =
-  'Ruiseño, juguetón, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!';
+  'Ruiseño, cariñoso, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!';
 const kittenRace1 = 'British Shorthair';
 
 const kittenImage2 =
@@ -24,6 +24,10 @@ const kittenDesc3 =
   'Ruiseño, juguetón, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!';
 const kittenRace3 = 'British Shorthair';
 
+
+let html = '';
+
+
 const kitten1 = `<li class="card">
  <article>
    <img
@@ -32,7 +36,7 @@ const kitten1 = `<li class="card">
      alt="gatito"
    />
    <h3 class="card_title">${kittenName1.toUpperCase()}</h3>
-   <h4 class="card_race">${kittenRace1}</h4>
+   <h4 class="card_race">${html}</h4>
    <p class="card_description">
      ${kittenDesc1}
    </p>
@@ -71,28 +75,41 @@ let descrSearchText;
 
 inputSearchDesc.value = 'cariñoso';
 
-descrSearchText = input_search_desc.value;
+descrSearchText = inputSearchDesc.value;
 
-newForm.classList.remove('collapsed');
 
-catList.innerHTML = kitten1 + kitten2 + kitten3;
-
-if (kittenDesc1.includes(descrSearchText)) {
-  if (descrSearchText.classList.contains('collapse')) {
-    descrSearchText.classList.remove('collapse');
-  } else {
-    descrSearchText.classList.add('collapse');
+if (kittenRace1 ==='') {
+  html = 'no se ha especificado raza';
   }
-} else {
-  if (descrSearchText.classList.contains('collapse')) {
-    descrSearchText.classList.remove('collapse');
+  else {
+    html = kittenRace1;
   }
+
+/*newForm.classList.remove('collapsed');*/
+
+
+
+
+if (kittenDesc1.includes(descrSearchText)) 
+{ catList.innerHTML = catList.innerHTML+ kitten1;
+    
 }
 
-if (kittenDesc2.includes(descrSearchText)) {
-  //Completa el código
+if (kittenDesc2.includes(descrSearchText)) 
+{ catList.innerHTML = catlist.innerHTML + kitten2;
+  
 }
 
-if (kittenDesc3.includes(descrSearchText)) {
-  //Completa el código
+if (kittenDesc3.includes(descrSearchText)) 
+{ catList.innerHTML = catList.innerHTML + kitten3;
+  
 }
+
+if (formElement.classList.contains ('collapsed')){
+  newForm.classList.remove ('collapsed');
+}
+else { newForm.classList.add ('collapsed');
+}
+
+
+
