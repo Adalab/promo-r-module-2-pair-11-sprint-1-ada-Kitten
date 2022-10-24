@@ -24,9 +24,7 @@ const kittenDesc3 =
   'Ruiseño, juguetón, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!';
 const kittenRace3 = 'British Shorthair';
 
-
 let html = '';
-
 
 const kitten1 = `<li class="card">
  <article>
@@ -77,39 +75,28 @@ inputSearchDesc.value = 'cariñoso';
 
 descrSearchText = inputSearchDesc.value;
 
-
-if (kittenRace1 ==='') {
+if (kittenRace1 === '') {
   html = 'no se ha especificado raza';
-  }
-  else {
-    html = kittenRace1;
-  }
+} else {
+  html = kittenRace1;
+}
 
 /*newForm.classList.remove('collapsed');*/
 
-
-
-
-if (kittenDesc1.includes(descrSearchText)) 
-{ catList.innerHTML = catList.innerHTML+ kitten1;
-    
+if (kittenDesc1.includes(descrSearchText)) {
+  catList.innerHTML = catList.innerHTML + kitten1;
 }
 
-if (kittenDesc2.includes(descrSearchText)) 
-{ catList.innerHTML = catlist.innerHTML + kitten2;
-  
+if (kittenDesc2.includes(descrSearchText)) {
+  catList.innerHTML = catlist.innerHTML + kitten2;
 }
 
-if (kittenDesc3.includes(descrSearchText)) 
-{ catList.innerHTML = catList.innerHTML + kitten3;
-  
+if (kittenDesc3.includes(descrSearchText)) {
+  catList.innerHTML = catList.innerHTML + kitten3;
 }
 
-if (formElement.classList.contains ('collapsed')){
-  newForm.classList.remove ('collapsed');
+if (formElement.classList.contains('collapsed')) {
+  newForm.classList.remove('collapsed');
+} else {
+  newForm.classList.add('collapsed');
 }
-else { newForm.classList.add ('collapsed');
-}
-
-
-
