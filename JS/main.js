@@ -1,5 +1,6 @@
 'use strict';
 
+//variables
 const newForm = document.querySelector('.js-new-form');
 
 const catList = document.querySelector('.js-list');
@@ -67,13 +68,25 @@ ${kittenDesc3}
 </p>
 </li>`;
 
-const inputSearchDesc = document.querySelector('.js_in_search_desc');
-
 let descrSearchText;
 
-inputSearchDesc.value = 'cariñoso';
+const plusIcon = document.querySelector('.item');
+const addButton = document.querySelector('.js-btn-add');
+const cancelButton = document.querySelector('.js-btn-cancel');
 
-descrSearchText = inputSearchDesc.value;
+const inputDesc = document.querySelector('.js-input-desc');
+const inputPhoto = document.querySelector('.js-input-photo');
+const inputName = document.querySelector('.js-input-name');
+const inputRace = document.querySelector('.js-input-race');
+const labelMessageError = document.querySelector('.js-label-error');
+
+const searchForm = document.querySelector('.js-search-form');
+const inputSearchDesc = document.querySelector('.js-input-search-desc');
+const inputSearchRace = document.querySelector('.js-input-search-race');
+const labelMessageSearchError = document.querySelector(
+  '.js-label-search-error'
+);
+const searchButton = document.querySelector('.js-btn-search');
 
 if (kittenRace1 === '') {
   html = 'no se ha especificado raza';
@@ -81,7 +94,10 @@ if (kittenRace1 === '') {
   html = kittenRace1;
 }
 
-/*newForm.classList.remove('collapsed');*/
+plusIcon.addEventListener('click', (event) => {
+  event.preventDefault();
+  newForm.classList.toggle('collapsed');
+});
 
 if (kittenDesc1.includes(descrSearchText)) {
   catList.innerHTML = catList.innerHTML + kitten1;
