@@ -92,11 +92,29 @@ const searchButton = document.querySelector('.js-btn-search');
 
 //operaciones
 
-plusIcon.addEventListener('click', (event) => {
+//Función añadir o eliminar una clase, dependiendo de si la tiene o no
+/*plusIcon.addEventListener('click', (event) => {
   event.preventDefault();
-  newForm.classList.toggle('collapsed');
-});
+  if (newForm.classList.contains('collapsed')) {
+    showNewCatForm();
+  } else {
+    hideNewCatForm();
+  }
+});*/
 
+//Si meto la función en una variable...
+const clickHandleplus = () => {
+  if (newForm.classList.contains('collapsed')) {
+    showNewCatForm();
+  } else {
+    hideNewCatForm();
+  }
+};
+
+//La puedo convertir en un argumento y hacer la función principal más sencilla:
+plusIcon.addEventListener('click', clickHandleplus);
+
+//---------------------------------------------------------------------------
 addButton.addEventListener('click', (event) => {
   event.preventDefault();
   const valueDesc = inputDesc.value;
@@ -157,3 +175,32 @@ if (kittenDesc3.includes(descrSearchText)) {
 }
 
 //end operaciones
+
+//funciones
+
+function showNewCatForm() {
+  newForm.classList.remove('collapsed');
+}
+function hideNewCatForm() {
+  newForm.classList.add('collapsed');
+}
+
+function renderKitten(url, desc, name, race) {
+  const newCat = `<li class="card">
+  <article>
+    <img
+      class="card_img"
+      src="${url}"
+      alt="gatito"
+    />
+    <h3 class="card_title">${name.toUpperCase()}</h3>
+    <h4 class="card_race">${race}</h4>
+    <p class="card_description">
+      ${desc}
+    </p>
+  </article>
+  </li>`;
+  return newCat;
+}
+
+renderKitten();
