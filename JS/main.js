@@ -88,16 +88,61 @@ const labelMessageSearchError = document.querySelector(
 );
 const searchButton = document.querySelector('.js-btn-search');
 
+//end variables
+
+//operaciones
+
+plusIcon.addEventListener('click', (event) => {
+  event.preventDefault();
+  newForm.classList.toggle('collapsed');
+});
+
+addButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  const valueDesc = inputDesc.value;
+  const valuePhoto = inputPhoto.value;
+  const valueName = inputName.value;
+
+  if (valueDesc === '' || valuePhoto === '' || valueName === '') {
+    labelMessageError.innerHTML = 'Debe rellenar todos los valores.';
+  } else {
+    labelMessageError.innerHTML = '';
+  }
+});
+
+cancelButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  inputDesc.value = '';
+  inputPhoto.value = '';
+  inputName.value = '';
+  inputRace.value = '';
+  labelMessageError.innerHTML = '';
+  newForm.classList.add('collapsed');
+});
+
+searchButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  const valueDesc = inputSearchDesc.value;
+  const valueRace = inputSearchRace.value;
+
+  if (valueDesc === '' || valueRace === '') {
+    labelMessageSearchError.innerHTML = 'Debe rellenar todos los valores.';
+  } else {
+    labelMessageSearchError.innerHTML = '';
+  }
+});
+
+inputSearchDesc.value = 'cariñoso';
+
+descrSearchText = inputSearchDesc.value;
+
 if (kittenRace1 === '') {
   html = 'no se ha especificado raza';
 } else {
   html = kittenRace1;
 }
 
-plusIcon.addEventListener('click', (event) => {
-  event.preventDefault();
-  newForm.classList.toggle('collapsed');
-});
+/*newForm.classList.remove('collapsed');*/
 
 if (kittenDesc1.includes(descrSearchText)) {
   catList.innerHTML = catList.innerHTML + kitten1;
@@ -111,8 +156,4 @@ if (kittenDesc3.includes(descrSearchText)) {
   catList.innerHTML = catList.innerHTML + kitten3;
 }
 
-if (formElement.classList.contains('collapsed')) {
-  newForm.classList.remove('collapsed');
-} else {
-  newForm.classList.add('collapsed');
-}
+//end operaciones
