@@ -1,10 +1,8 @@
 'use strict';
 
 //variables
-const newForm = document.querySelector('.js-new-form');
 
-const catList = document.querySelector('.js-list');
-
+//Datos de cada gatito
 const kittenImage1 = 'https://ychef.files.bbci.co.uk/976x549/p07ryyyj.jpg';
 const kittenName1 = 'Anastacio';
 const kittenDesc1 =
@@ -24,9 +22,14 @@ const kittenName3 = 'Cielo';
 const kittenDesc3 =
   'Ruiseño, juguetón, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!';
 const kittenRace3 = 'British Shorthair';
+//end Datos de cada gatito
 
+//variable que usamos en un ejercicio pero que habrá que borrar porque no sirve de mucho
 let html = '';
 
+//Aquí guardábamos los elementos li de cada gatito pero ahora
+//se sustituyen por la función renderKitten
+/*
 const kitten1 = `<li class="card">
  <article>
    <img
@@ -67,114 +70,54 @@ const kitten3 = ` <li class="card">
 ${kittenDesc3}
 </p>
 </li>`;
+*/
 
+//esta valiable la usábamos el texto del input de descripción del form de búsqueda
+//aún está por ver si la seguimos necesitando o no
 let descrSearchText;
 
+//Elementos de HTML
+//Formulario de añadir gatito
+const newForm = document.querySelector('.js-new-form');
+
+//Lista de gatos vacía que rellenaremos de gatos con JS
+const catList = document.querySelector('.js-list');
+
+//Botón + de mostrar y ocultar el form para añadir gatito
 const plusIcon = document.querySelector('.item');
+//Botón de añadir gatito
 const addButton = document.querySelector('.js-btn-add');
+//Botón de cancelar el form de añadir gatito
 const cancelButton = document.querySelector('.js-btn-cancel');
 
+//input de descripción en el form de añadir gatito
 const inputDesc = document.querySelector('.js-input-desc');
+//input de imagen en el form de añadir gatito
 const inputPhoto = document.querySelector('.js-input-photo');
+//input de nombre en el form de añadir gatito
 const inputName = document.querySelector('.js-input-name');
+//input de raza en el form de añadir gatito
 const inputRace = document.querySelector('.js-input-race');
+//label para mostrar error cuando no rellenan todos los campos
+//en el form de añadir gatito
 const labelMessageError = document.querySelector('.js-label-error');
 
+//form de búsqueda
 const searchForm = document.querySelector('.js-search-form');
+//input de descripción en el form de búsqueda
 const inputSearchDesc = document.querySelector('.js-input-search-desc');
+//input de raza en el form de búsqueda
 const inputSearchRace = document.querySelector('.js-input-search-race');
+//label para mostrar error cuando no rellenan todos los campos
+//en el form de búsqueda
 const labelMessageSearchError = document.querySelector(
   '.js-label-search-error'
 );
+//botón de Buscar en el form de búsqueda
 const searchButton = document.querySelector('.js-btn-search');
+//end Elementos de HTML
 
 //end variables
-
-//operaciones
-
-//Función añadir o eliminar una clase, dependiendo de si la tiene o no
-/*plusIcon.addEventListener('click', (event) => {
-  event.preventDefault();
-  if (newForm.classList.contains('collapsed')) {
-    showNewCatForm();
-  } else {
-    hideNewCatForm();
-  }
-});*/
-
-//Si meto la función en una variable...
-const clickHandleplus = () => {
-  if (newForm.classList.contains('collapsed')) {
-    showNewCatForm();
-  } else {
-    hideNewCatForm();
-  }
-};
-
-//La puedo convertir en un argumento y hacer la función principal más sencilla:
-plusIcon.addEventListener('click', clickHandleplus);
-
-//---------------------------------------------------------------------------
-addButton.addEventListener('click', (event) => {
-  event.preventDefault();
-  const valueDesc = inputDesc.value;
-  const valuePhoto = inputPhoto.value;
-  const valueName = inputName.value;
-
-  if (valueDesc === '' || valuePhoto === '' || valueName === '') {
-    labelMessageError.innerHTML = 'Debe rellenar todos los valores.';
-  } else {
-    labelMessageError.innerHTML = '';
-  }
-});
-
-cancelButton.addEventListener('click', (event) => {
-  event.preventDefault();
-  inputDesc.value = '';
-  inputPhoto.value = '';
-  inputName.value = '';
-  inputRace.value = '';
-  labelMessageError.innerHTML = '';
-  newForm.classList.add('collapsed');
-});
-
-searchButton.addEventListener('click', (event) => {
-  event.preventDefault();
-  const valueDesc = inputSearchDesc.value;
-  const valueRace = inputSearchRace.value;
-
-  if (valueDesc === '' || valueRace === '') {
-    labelMessageSearchError.innerHTML = 'Debe rellenar todos los valores.';
-  } else {
-    labelMessageSearchError.innerHTML = '';
-  }
-});
-
-inputSearchDesc.value = 'cariñoso';
-
-descrSearchText = inputSearchDesc.value;
-
-if (kittenRace1 === '') {
-  html = 'no se ha especificado raza';
-} else {
-  html = kittenRace1;
-}
-
-/*newForm.classList.remove('collapsed');*/
-
-if (kittenDesc1.includes(descrSearchText)) {
-  catList.innerHTML = catList.innerHTML + kitten1;
-}
-
-if (kittenDesc2.includes(descrSearchText)) {
-  catList.innerHTML = catlist.innerHTML + kitten2;
-}
-
-if (kittenDesc3.includes(descrSearchText)) {
-  catList.innerHTML = catList.innerHTML + kitten3;
-}
-
-//end operaciones
 
 //funciones
 
@@ -203,4 +146,124 @@ function renderKitten(url, desc, name, race) {
   return newCat;
 }
 
-renderKitten();
+//end funciones
+
+//operaciones
+
+//Función añadir o eliminar una clase, dependiendo de si la tiene o no
+/*plusIcon.addEventListener('click', (event) => {
+  event.preventDefault();
+  if (newForm.classList.contains('collapsed')) {
+    showNewCatForm();
+  } else {
+    hideNewCatForm();
+  }
+});*/
+
+//Si meto la función en una variable...
+const clickHandlePlus = () => {
+  if (newForm.classList.contains('collapsed')) {
+    showNewCatForm();
+  } else {
+    hideNewCatForm();
+  }
+};
+
+//La puedo convertir en un argumento y hacer la función principal más sencilla:
+plusIcon.addEventListener('click', clickHandlePlus);
+
+//---------------------------------------------------------------------------
+addButton.addEventListener('click', addNewKitten);
+
+function addNewKitten(event) {
+  event.preventDefault();
+  const valueDesc = inputDesc.value;
+  const valuePhoto = inputPhoto.value;
+  const valueName = inputName.value;
+  const valueRace = inputRace.value;
+
+  if (valueDesc === '' || valuePhoto === '' || valueName === '') {
+    labelMessageError.innerHTML = 'Debe rellenar todos los valores.';
+  } else {
+    labelMessageError.innerHTML = '';
+    catList.innerHTML += renderKitten(
+      valuePhoto,
+      valueDesc,
+      valueName,
+      valueRace
+    );
+  }
+}
+
+cancelButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  inputDesc.value = '';
+  inputPhoto.value = '';
+  inputName.value = '';
+  inputRace.value = '';
+  labelMessageError.innerHTML = '';
+  newForm.classList.add('collapsed');
+});
+
+searchButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  const valueDesc = inputSearchDesc.value;
+  const valueRace = inputSearchRace.value;
+
+  if (valueDesc === '' || valueRace === '') {
+    labelMessageSearchError.innerHTML = 'Debe rellenar todos los valores.';
+  } else {
+    labelMessageSearchError.innerHTML = '';
+  }
+});
+
+if (kittenRace1 === '') {
+  html = 'no se ha especificado raza';
+} else {
+  html = kittenRace1;
+}
+
+/*newForm.classList.remove('collapsed');*/
+
+//Este código es para hacer la búsqueda por descripción.
+//Habrá que meterlo luego en un eventListener del click del botón de búsqueda
+/*inputSearchDesc.value = 'cariñoso';
+
+descrSearchText = inputSearchDesc.value;
+
+if (kittenDesc1.includes(descrSearchText)) {
+  catList.innerHTML = catList.innerHTML + kitten1;
+}
+
+if (kittenDesc2.includes(descrSearchText)) {
+  catList.innerHTML = catlist.innerHTML + kitten2;
+}
+
+if (kittenDesc3.includes(descrSearchText)) {
+  catList.innerHTML = catList.innerHTML + kitten3;
+}*/
+//end búsqueda por descripción
+
+//Pintar todos los gatitos cuando se carga la página
+catList.innerHTML += renderKitten(
+  kittenImage1,
+  kittenDesc1,
+  kittenName1,
+  kittenRace1
+);
+
+catList.innerHTML += renderKitten(
+  kittenImage2,
+  kittenDesc2,
+  kittenName2,
+  kittenRace2
+);
+
+catList.innerHTML += renderKitten(
+  kittenImage3,
+  kittenDesc3,
+  kittenName3,
+  kittenRace3
+);
+
+//end operaciones
