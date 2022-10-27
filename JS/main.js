@@ -194,17 +194,33 @@ function addNewKitten(event) {
     );
   }
 }
+//Crear un filtro por descripción para buscar gatitos que la contengan
+//1º Traer los values que hay dentro de los imputs
+//2º Escribir un condicional que me muestre todas las descripciones iguales al valor del inputSearchDesc o inputSearchRace
 
-cancelButton.addEventListener('click', (event) => {
+const filterKitten = (event) => {
   event.preventDefault();
-  inputDesc.value = '';
-  inputPhoto.value = '';
-  inputName.value = '';
-  inputRace.value = '';
-  labelMessageError.innerHTML = '';
-  newForm.classList.add('collapsed');
-});
+  const inputSearchDesc = inputSearchDesc.value;
+  const inputSearchRace = inputSearchRace.value;
 
+  if (kittenDesc1.includes(inputSearchDesc)) {
+    catList.innerHTML =
+      catList.innerHTML +
+      renderKitten(kittenImage1, kittenDesc1, kittenName1, kittenRace1);
+  }
+  if (kittenDesc2.includes(inputSearchDesc)) {
+    catList.innerHTML =
+      catList.innerHTML +
+      renderKitten(kittenImage2, kittenDesc2, kittenName2, kittenRace2);
+  }
+  if (kittenDesc3.includes(inputSearchDesc)) {
+    catList.innerHTML =
+      catList.innerHTML +
+      renderKitten(kittenImage3, kittenDesc3, kittenName3, kittenRace3);
+  }
+};
+
+//Ejercicio de condicionales. ¿Está vacío el campo?
 searchButton.addEventListener('click', (event) => {
   event.preventDefault();
   const valueDesc = inputSearchDesc.value;
@@ -222,6 +238,19 @@ if (kittenRace1 === '') {
 } else {
   html = kittenRace1;
 }
+
+const cancelNewKitten = (event) => {
+  event.preventDefault();
+  inputDesc.value = '';
+  inputPhoto.value = '';
+  inputName.value = '';
+  inputRace.value = '';
+  labelMessageError.innerHTML = '';
+  newForm.classList.add('collapsed');
+};
+// Hemos creado una nueva función que recoge la función cancelar gatito para dejar limpio el addEventListener
+// De esta forma, la función manejadora (cancelButton) se sirve de la secundaria, cancelNewKitten cuando la necesite.
+cancelButton.addEventListener('click', cancelNewKitten);
 
 /*newForm.classList.remove('collapsed');*/
 
