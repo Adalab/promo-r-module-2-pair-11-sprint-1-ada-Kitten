@@ -1,6 +1,6 @@
 'use strict';
 
-//variables
+/*********************VARIABLES***********************/
 
 //Datos de cada gatito
 const kittenImage1 = 'https://ychef.files.bbci.co.uk/976x549/p07ryyyj.jpg';
@@ -14,7 +14,7 @@ const kittenImage2 =
 const kittenName2 = 'Fiona';
 const kittenDesc2 =
   'Ruiseño, juguetón, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!';
-const kittenRace2 = 'British Shorthair';
+const kittenRace2 = '';
 
 const kittenImage3 =
   'https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/newscms/2019_39/3021711/190923-cat-pet-stock-cs-1052a.jpg';
@@ -119,15 +119,20 @@ const searchButton = document.querySelector('.js-btn-search');
 
 //end variables
 
-//funciones
+/*********************FUNCIONES***********************/
 
+//Función que muestra el form de añadir gatito
 function showNewCatForm() {
   newForm.classList.remove('collapsed');
 }
+
+//Función que esconde el form de añadir gatito
 function hideNewCatForm() {
   newForm.classList.add('collapsed');
 }
 
+//Función que devuelve el html para pintar un gatito en pantalla
+//(luego usaremos este html para meterlo en el innerHTML de la lista de gatitos)
 function renderKitten(url, desc, name, race) {
   const newCat = `<li class="card">
   <article>
@@ -137,7 +142,7 @@ function renderKitten(url, desc, name, race) {
       alt="gatito"
     />
     <h3 class="card_title">${name.toUpperCase()}</h3>
-    <h4 class="card_race">${race}</h4>
+    ${renderRace(race)}
     <p class="card_description">
       ${desc}
     </p>
@@ -146,9 +151,29 @@ function renderKitten(url, desc, name, race) {
   return newCat;
 }
 
-//end funciones
+function renderAllKittens() {
+  //Pintar todos los gatitos
+  catList.innerHTML += renderKitten(
+    kittenImage1,
+    kittenDesc1,
+    kittenName1,
+    kittenRace1
+  );
 
-//operaciones
+  catList.innerHTML += renderKitten(
+    kittenImage2,
+    kittenDesc2,
+    kittenName2,
+    kittenRace2
+  );
+
+  catList.innerHTML += renderKitten(
+    kittenImage3,
+    kittenDesc3,
+    kittenName3,
+    kittenRace3
+  );
+}
 
 //Función añadir o eliminar una clase, dependiendo de si la tiene o no
 /*plusIcon.addEventListener('click', (event) => {
@@ -160,7 +185,7 @@ function renderKitten(url, desc, name, race) {
   }
 });*/
 
-//Si meto la función en una variable...
+//Función manejadora del evento click del botón de + que abre y cierra el form de añadir gatito
 const clickHandlePlus = () => {
   if (newForm.classList.contains('collapsed')) {
     showNewCatForm();
@@ -168,6 +193,74 @@ const clickHandlePlus = () => {
     hideNewCatForm();
   }
 };
+
+//Función manejadora del evento click en el botón de cancelar el form de añadir gatito
+const cancelNewKitten = (event) => {
+  event.preventDefault();
+  inputDesc.value = '';
+  inputPhoto.value = '';
+  inputName.value = '';
+  inputRace.value = '';
+  labelMessageError.innerHTML = '';
+  newForm.classList.add('collapsed');
+};
+
+//Crear un filtro por descripción para buscar gatitos que la contengan
+//1º Traer los values que hay dentro de los imputs
+//2º Escribir un condicional que me muestre todas las descripciones iguales al valor del inputSearchDesc o inputSearchRace
+
+const filterKitten = (event) => {
+  event.preventDefault();
+  const valueDesc = inputSearchDesc.value;
+  const valueRace = inputSearchRace.value;
+
+  //Yo quiero que si todos los inputs están vacíos, que me muestre un mensaje de error
+  //También quiero que si el input de descripción está relleno pero el de raza no, me busque por descripción
+
+  if (valueDesc === '' && valueRace === '') {
+    labelMessageSearchError.innerHTML = 'Debe rellenar algún valor.';
+    //esto deja el innerHTML vacío para quitar lo que tuviera por defecto
+    catList.innerHTML = '';
+    renderAllKittens();
+  } else if (valueDesc !== '' && valueRace === '') {
+    labelMessageSearchError.innerHTML = '';
+    //esto deja el innerHTML vacío para quitar lo que tuviera por defecto
+    catList.innerHTML = '';
+    //ahora es cuando añadimos solo los gatitos que contienen la descripción indicada en el input de búsqueda
+    if (kittenDesc1.includes(valueDesc)) {
+      catList.innerHTML =
+        catList.innerHTML +
+        renderKitten(kittenImage1, kittenDesc1, kittenName1, kittenRace1);
+    }
+    if (kittenDesc2.includes(valueDesc)) {
+      catList.innerHTML =
+        catList.innerHTML +
+        renderKitten(kittenImage2, kittenDesc2, kittenName2, kittenRace2);
+    }
+    if (kittenDesc3.includes(valueDesc)) {
+      catList.innerHTML =
+        catList.innerHTML +
+        renderKitten(kittenImage3, kittenDesc3, kittenName3, kittenRace3);
+    }
+  }
+};
+
+//Función que devuelve html con "No se ha especificado la raza" si la raza está vacía
+//Si la raza está rellena, devuelve el HTML con la raza rellena
+function renderRace(race) {
+  let result = '';
+
+  if (race === '') {
+    result = '<p class="card_race">No se ha especificado la raza</p>';
+  } else {
+    result = `<h3 class="card_race">${race}</h3>`;
+  }
+  return result;
+}
+
+//end funciones
+
+/*********************EVENTOS***********************/
 
 //La puedo convertir en un argumento y hacer la función principal más sencilla:
 plusIcon.addEventListener('click', clickHandlePlus);
@@ -194,68 +287,40 @@ function addNewKitten(event) {
     );
   }
 }
-//Crear un filtro por descripción para buscar gatitos que la contengan
-//1º Traer los values que hay dentro de los imputs
-//2º Escribir un condicional que me muestre todas las descripciones iguales al valor del inputSearchDesc o inputSearchRace
-
-const filterKitten = (event) => {
-  event.preventDefault();
-  const inputSearchDesc = inputSearchDesc.value;
-  const inputSearchRace = inputSearchRace.value;
-
-  if (kittenDesc1.includes(inputSearchDesc)) {
-    catList.innerHTML =
-      catList.innerHTML +
-      renderKitten(kittenImage1, kittenDesc1, kittenName1, kittenRace1);
-  }
-  if (kittenDesc2.includes(inputSearchDesc)) {
-    catList.innerHTML =
-      catList.innerHTML +
-      renderKitten(kittenImage2, kittenDesc2, kittenName2, kittenRace2);
-  }
-  if (kittenDesc3.includes(inputSearchDesc)) {
-    catList.innerHTML =
-      catList.innerHTML +
-      renderKitten(kittenImage3, kittenDesc3, kittenName3, kittenRace3);
-  }
-};
 
 //Ejercicio de condicionales. ¿Está vacío el campo?
-searchButton.addEventListener('click', (event) => {
-  event.preventDefault();
-  const valueDesc = inputSearchDesc.value;
-  const valueRace = inputSearchRace.value;
+// searchButton.addEventListener('click', (event) => {
+//   event.preventDefault();
+//   const valueDesc = inputSearchDesc.value;
+//   const valueRace = inputSearchRace.value;
 
-  if (valueDesc === '' || valueRace === '') {
-    labelMessageSearchError.innerHTML = 'Debe rellenar todos los valores.';
-  } else {
-    labelMessageSearchError.innerHTML = '';
-  }
-});
+//   if (valueDesc === '' || valueRace === '') {
+//     labelMessageSearchError.innerHTML = 'Debe rellenar todos los valores.';
+//   } else {
+//     labelMessageSearchError.innerHTML = '';
+//   }
+// });
 
-if (kittenRace1 === '') {
-  html = 'no se ha especificado raza';
-} else {
-  html = kittenRace1;
-}
+searchButton.addEventListener('click', filterKitten);
 
-const cancelNewKitten = (event) => {
-  event.preventDefault();
-  inputDesc.value = '';
-  inputPhoto.value = '';
-  inputName.value = '';
-  inputRace.value = '';
-  labelMessageError.innerHTML = '';
-  newForm.classList.add('collapsed');
-};
+// if (kittenRace1 === '') {
+//   html = 'no se ha especificado raza';
+// } else {
+//   html = kittenRace1;
+// }
+
 // Hemos creado una nueva función que recoge la función cancelar gatito para dejar limpio el addEventListener
 // De esta forma, la función manejadora (cancelButton) se sirve de la secundaria, cancelNewKitten cuando la necesite.
 cancelButton.addEventListener('click', cancelNewKitten);
 
+//END EVENTOS
+
+/*********************RESTO DE COSAS************************/
+
 /*newForm.classList.remove('collapsed');*/
 
 //Este código es para hacer la búsqueda por descripción.
-//Habrá que meterlo luego en un eventListener del click del botón de búsqueda
+//Habrá que meterlo luego en un eventListener del click del botón de búsqueda (está hecho en la sección de eventos)
 /*inputSearchDesc.value = 'cariñoso';
 
 descrSearchText = inputSearchDesc.value;
@@ -274,25 +339,6 @@ if (kittenDesc3.includes(descrSearchText)) {
 //end búsqueda por descripción
 
 //Pintar todos los gatitos cuando se carga la página
-catList.innerHTML += renderKitten(
-  kittenImage1,
-  kittenDesc1,
-  kittenName1,
-  kittenRace1
-);
+renderAllKittens();
 
-catList.innerHTML += renderKitten(
-  kittenImage2,
-  kittenDesc2,
-  kittenName2,
-  kittenRace2
-);
-
-catList.innerHTML += renderKitten(
-  kittenImage3,
-  kittenDesc3,
-  kittenName3,
-  kittenRace3
-);
-
-//end operaciones
+//end RESTO DE COSAS
